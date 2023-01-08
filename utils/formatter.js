@@ -10,12 +10,7 @@ function formatDocumentOne(doc){
 
 //función para formatear documentos de mongo
 function formatDocuments(documents){
-    return documents.map(d => {
-        const res = {...d}._doc
-        res.stars = d.stars
-        res.id = d._id
-        return res
-    })
+    return documents.map(d => formatDocumentOne(d))
 }
 
 module.exports = {formatDocumentOne, formatDocuments}
