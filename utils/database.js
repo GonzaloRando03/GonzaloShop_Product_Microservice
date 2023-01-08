@@ -3,6 +3,7 @@ const logger = require('./logger')
 const config = require('./config')
 
 const connectDatabase = () => {
+    mongoose.set('strictQuery', true)
     logger.info('connecting to', config.MONGODB_URI)
 
     mongoose.connect(config.MONGODB_URI).then(() => {

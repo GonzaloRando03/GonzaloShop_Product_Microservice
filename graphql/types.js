@@ -33,12 +33,12 @@ const typeDefs = gql`
         amount: Int
     ): [Product!]!
     getProductOne(
-        id: ID!
+        name: String!
     ): Product
   }
   type Mutation {
     addValoration(
-      id: ID!
+      name: String!
       username: String!
       text: String
       stars: Int!

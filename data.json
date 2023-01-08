@@ -1,0 +1,29 @@
+[{
+    "name": "Producto1",
+    "price": 10,
+    "category": "Tecnología",
+    "description": "la description del producto 1",
+    "features":{
+      "colors": ["blanco", "negro"],
+      "width": 10,
+      "height": 20
+    },
+    "images": "imagen1",
+    "brand": "Marca1",
+    "type": "Producto",
+    "valorations": []
+},{
+    "name": "Producto2",
+    "price": 10,
+    "category": "Tecnología",
+    "description": "la description del producto 2",
+    "features":{
+      "colors": ["blanco", "negro"],
+      "width": 10,
+      "height": 20
+    },
+    "images": "imagen2",
+    "brand": "Marca2",
+    "type": "Producto",
+    "valorations": []
+}]

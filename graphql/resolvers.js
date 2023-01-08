@@ -8,12 +8,7 @@ const resolvers = {
       getProductOne: queries.getProductOne
     },
     Mutation:{
-      addValoration: async (root, args, context) => {
-        console.log('asdf',context)
-        const product = null
-        pubsub.publish('PRODUCT_CHANGED', { personAdded: product })
-        return product
-      }
+      addValoration: queries.addValoration
     },
     Subscription: {
       productChanged: {

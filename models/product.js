@@ -31,9 +31,28 @@ const schema = new mongoose.Schema({
     username: String,
     text: String,
     stars: Number
-  },
-  stars: Number
-  
+  }
+})
+
+//campo calculado stars
+schema.virtual('stars').get(function(){
+  const valorations = {...this.valorations}
+  const starsTotal = valorations.stars.reduce((a, c) => a + c, 0)
+  const stars = (starsTotal/valorations.stars.length)
+  if(isNaN(stars)){
+    return 0
+  }else{
+    return stars
+  }
+})
+
+//formateamos el modelo del json que mandamos al frontend
+schema.set('toJSON', {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString()
+    delete returnedObject._id
+    delete returnedObject.__v
+  }
 })
 
 module.exports = mongoose.model('Products', schema)
