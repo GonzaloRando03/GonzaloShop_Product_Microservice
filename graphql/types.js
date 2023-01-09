@@ -1,6 +1,10 @@
 const { gql } = require('apollo-server')
 
 const typeDefs = gql`
+  union Result = Error | Product 
+  type Error{
+    error: String!
+  }
   type Features{
     colors: [String]
     height: Float
@@ -26,15 +30,16 @@ const typeDefs = gql`
     type: String
     valorations: [Valoration]
     stars: Float
+    sale: Boolean
   }
   type Query {
     getProducts(
         search: String
         amount: Int
-    ): [Product!]!
+    ): [Result]!
     getProductOne(
         name: String!
-    ): Product
+    ): Result
   }
   type Mutation {
     addValoration(
@@ -42,7 +47,7 @@ const typeDefs = gql`
       username: String!
       text: String
       stars: Int!
-    ): Product
+    ): Result
   }
   type Subscription {
     productChanged: Product!

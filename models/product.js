@@ -31,6 +31,10 @@ const schema = new mongoose.Schema({
     username: String,
     text: String,
     stars: Number
+  },
+  sale: {
+    type: Boolean,
+    require: true
   }
 })
 

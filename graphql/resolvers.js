@@ -3,6 +3,20 @@ const queries = require("./queries")
 const pubsub = new PubSub()
 
 const resolvers = {
+    //para devolver el tipo Result
+    Result: {
+      __resolveType: (object) => {
+        if (object.name) {
+            return "Product";
+        }
+
+        if (object.error) {
+            return "Error";
+        }
+
+        return null;
+      }
+    },
     Query: {
       getProducts: queries.getProducts,
       getProductOne: queries.getProductOne

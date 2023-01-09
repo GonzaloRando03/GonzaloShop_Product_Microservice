@@ -1,6 +1,7 @@
 const Product = require("../models/product")
 const {formatDocumentOne, formatDocuments} = require("../utils/formatter")
 
+
 //función para conseguir los productos
 const getProducts = async (root, args) => {
     //cantidad es igual a la pasada por argumento o en su defecto a todos los documentos.
@@ -15,6 +16,12 @@ const getProducts = async (root, args) => {
                 ]
             }
         ).limit(amount)
+
+        if(products.length === 0){
+            return [{
+                error: "Productos no encontrados"
+            }]
+        }
         return formatDocuments(products)
 
     }else{
@@ -23,6 +30,7 @@ const getProducts = async (root, args) => {
     }
 }
 
+
 //función para conseguir un único producto
 const getProductOne = async (root, args) => {
     if (!args.name){
@@ -30,7 +38,14 @@ const getProductOne = async (root, args) => {
             error: "Producto no encontrado"
         }
     }
+
     const product = await Product.findOne({name: {$eq: args.name}})
+
+    if(!product){
+        return {
+            error: "Producto no encontrado"
+        }
+    }
     return formatDocumentOne(product)
 }
 
@@ -47,8 +62,15 @@ const addValoration = async (root, args, context) => {
         text: args.text? args.text: "",
         stars: args.stars
     }
+
     await Product.updateOne({name: {$eq: args.name}}, {$push: {valorations: newValoration}})
     const document = await Product.findOne({name: {$eq: args.name}})
+
+    if(!document){
+        return {
+            error: "Producto no encontrado"
+        }
+    }
     return formatDocumentOne(document)
     
 }
