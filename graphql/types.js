@@ -2,10 +2,10 @@ const { gql } = require('apollo-server')
 
 const typeDefs = gql`
   union Result = Error | Product 
-  type Error{
+  type Error {
     error: String!
   }
-  type Features{
+  type Features {
     colors: [String]
     height: Float
     width: Float
@@ -25,6 +25,7 @@ const typeDefs = gql`
     category: String!
     description: String!
     features: Features
+    image: String!
     images: [String!]!
     brand: String
     type: String
@@ -36,6 +37,7 @@ const typeDefs = gql`
     getProducts(
         search: String
         amount: Int
+        sale: Boolean
     ): [Result]!
     getProductOne(
         name: String!
