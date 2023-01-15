@@ -38,6 +38,9 @@ const typeDefs = gql`
         search: String
         amount: Int
         sale: Boolean
+        category: String
+        order: String
+        price: [Float]
     ): [Result]!
     getProductOne(
         name: String!
