@@ -3,20 +3,20 @@ const {formatDocumentOne, formatDocuments} = require("../utils/formatter")
 
 //función para conseguir un único producto
 const getProductOne = async (root, args) => {
-    if (!args.name){
+    if (!args.ident){
         return {
             error: "Producto no encontrado"
         }
     }
 
-    const product = await Product.findOne({name: {$eq: args.name}})
+    const product = await Product.findById(args.ident)
     return formatDocumentOne(product)
 }
 
 
 //función para añadir una valoración
 const addValoration = async (root, args, context) => {
-    if (!args.name | !args.username | !args.stars){
+    if (!args.ident | !args.username | !args.stars){
         return {
             error: "Producto no encontrado"
         }
@@ -27,8 +27,8 @@ const addValoration = async (root, args, context) => {
         stars: args.stars
     }
 
-    await Product.updateOne({name: {$eq: args.name}}, {$push: {valorations: newValoration}})
-    const document = await Product.findOne({name: {$eq: args.name}})
+    await Product.updateOne({_id: {$eq: args.ident}}, {$push: {valorations: newValoration}})
+    const document = await Product.findOne({_id: {$eq: args.ident}})
     return formatDocumentOne(document)
 }
 

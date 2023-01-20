@@ -9,9 +9,18 @@ const typeDefs = gql`
     colors: [String]
     height: Float
     width: Float
+    length: Float
     conectors: [String]
     batery: String
-    screen: String
+    pantalla: String
+    resolucion: String
+    OS: String
+    RAM: Int
+    size: [String]
+    material: String
+    filtro: String
+    alimentacion: String
+    capacidad: Int
   }
   type Valoration {
     username: String!
@@ -43,12 +52,12 @@ const typeDefs = gql`
         price: [Float]
     ): [Result]!
     getProductOne(
-        name: String!
+        ident: String!
     ): Result
   }
   type Mutation {
     addValoration(
-      name: String!
+      ident: String!
       username: String!
       text: String
       stars: Int!
