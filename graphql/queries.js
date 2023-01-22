@@ -252,7 +252,9 @@ const getProducts = async (root, args) => {
                     ]
                     
                 }).limit(amount).sort({"stars": 1})
-                return formatDocuments(products)
+                return formatDocuments(products.sort(function(a, b) {
+                    return b.stars - a.stars;
+                }))
             }
         }
     
@@ -276,7 +278,9 @@ const getProducts = async (root, args) => {
                     
                 }
             ).limit(amount).sort({"stars": 1})
-            return formatDocuments(products)
+            return formatDocuments(products.sort(function(a, b) {
+                return b.stars - a.stars;
+            }))
     
         }else{
             const products = await Product.find({   
@@ -289,7 +293,9 @@ const getProducts = async (root, args) => {
                 ]
                 
             }).limit(amount).sort({"stars": 1})
-            return formatDocuments(products)
+            return formatDocuments(products.sort(function(a, b) {
+                return b.stars - a.stars;
+            }))
         }
     }
     
