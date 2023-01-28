@@ -1,5 +1,106 @@
 const Product = require("../models/product")
+const axios = require("axios")
 const {formatDocumentOne, formatDocuments} = require("../utils/formatter")
+
+const createUser = async (root, args) => {
+    const URL = 'http://127.0.0.1:8000/api/users/'
+    try {
+        const user = {
+            name: args.name,
+            lastname: args.lastname,
+            username: args.username,
+            password: args.password,
+            email: args.email,
+            bank_account: args.bank_account
+        }
+    
+        const response = await axios.post(URL, user)
+        return response.data
+
+    } catch (error) {
+        return {
+            error: error.response.data.error
+        }
+    }
+}
+
+
+const addMoney = async (root, args) => {
+    const URL = 'http://127.0.0.1:8000/api/users/'
+    try {
+        const user = {
+            money: args.money, 
+            username: args.username
+        }
+
+        const response = await axios.put(URL, user)
+        return response.data
+
+    } catch (error) {
+        return {
+            error: error.response.data.error
+        }
+    }
+}
+
+
+const delUser = async (root, args) => {
+    const URL = 'http://127.0.0.1:8000/api/users/'
+    try {
+        const config = {
+            headers: { Authorization: args.token }
+        }
+        const response = await axios.delete(URL, config)
+        return response.data
+
+    } catch (error) {
+        return {
+            error: error.response.data.error
+        }
+    }
+}
+
+
+const loginUser = async (root, args) => {
+    const URL = 'http://127.0.0.1:8000/api/login/'
+    try {
+        const login = {
+            username: args.username,
+            password: args.password
+        }
+        const response = await axios.post(URL, login)
+        return response.data
+
+    } catch (error) {
+        return {
+            error: error.response.data.error
+        }
+    }
+}
+
+
+const sendBuy = async (root, args) => {
+    const URL = 'http://127.0.0.1:8001/api/compras/'
+    try {
+        const buy = {
+            idUsuario: args.idUsuario,
+            precioTotal: args.precioTotal,
+            fechaPedido: args.fechaPedido,
+            fechaEntrega: args.fechaEntrega,
+            articulos: args.articulos
+        }
+        const config = {
+            headers: { Authorization: args.token }
+        }
+        const response = await axios.post(URL, buy, config)
+        return response.data
+
+    } catch (error) {
+        return {
+            error: error.response.data.error
+        }
+    }
+}
 
 //función para conseguir un único producto
 const getProductOne = async (root, args) => {
@@ -379,4 +480,13 @@ const getProducts = async (root, args) => {
 }
 
 
-module.exports = {getProducts, getProductOne, addValoration}
+module.exports = {
+    createUser, 
+    addMoney, 
+    delUser, 
+    loginUser, 
+    sendBuy,
+    getProducts, 
+    getProductOne, 
+    addValoration
+}
