@@ -106,6 +106,8 @@ const typeDefs = gql`
   }
 
   type Query {
+
+
     getProducts(
         search: String
         amount: Int
@@ -121,6 +123,11 @@ const typeDefs = gql`
   }
 
   type Mutation {
+    getBuy(
+      idUsuario: Int!
+      token: String!
+    ): [CompraRes]!
+
     createUser(
       name: String!
       lastname: String

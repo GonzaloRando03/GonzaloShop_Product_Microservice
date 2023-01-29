@@ -97,7 +97,24 @@ const sendBuy = async (root, args) => {
 
     } catch (error) {
         return {
-            error: error.response.data.error
+            error: "No tienes dinero suficiente para realizar el pedido."
+        }
+    }
+}
+
+
+const getBuy = async (root, args) => {
+    const URL = 'http://127.0.0.1:8001/api/compras/'
+    try {
+        const config = {
+            headers: { Authorization: args.token }
+        }
+        const response = await axios.get(URL+String(args.idUsuario), config)
+        return response.data
+
+    } catch (error) {
+        return {
+            error: "Usuario no encontrado o sin permisos"
         }
     }
 }
@@ -486,6 +503,7 @@ module.exports = {
     delUser, 
     loginUser, 
     sendBuy,
+    getBuy,
     getProducts, 
     getProductOne, 
     addValoration

@@ -76,7 +76,8 @@ const resolvers = {
 
     Query: {
       getProducts: queries.getProducts,
-      getProductOne: queries.getProductOne
+      getProductOne: queries.getProductOne,
+
     },
     Mutation:{
       createUser: queries.createUser,
@@ -84,7 +85,8 @@ const resolvers = {
       delUser: queries.delUser,
       addValoration: queries.addValoration,
       loginUser: queries.loginUser,
-      sendBuy: queries.sendBuy
+      sendBuy: queries.sendBuy,
+      getBuy: queries.getBuy
     },
     Subscription: {
       productChanged: {
