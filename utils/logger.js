@@ -1,11 +1,11 @@
 const info = (...params) => {
     console.log(...params)
-}
-
-const error = (...params) => {
+  }
+  
+  const error = (...params) => {
     console.error('Error: ', ...params)
-}
-
-module.exports = {
+  }
+  
+  module.exports = {
     info, error
-}
+  }

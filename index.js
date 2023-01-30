@@ -1,16 +1,13 @@
-const { ApolloServer } = require('apollo-server')
-const connectDatabase = require("./utils/database")
-const typeDefs = require('./graphql/types')
-const resolvers = require('./graphql/resolvers')
+//imports
+const app = require('./app') // la aplicación Express real
+const http = require('http')
+const config = require('./utils/config')
+const logger = require('./utils/logger')
 
-connectDatabase()
+//creamos servidor
+const server = http.createServer(app)
 
-const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-})
-  
-server.listen().then(({ url, subscriptionsUrl }) => {
-    console.log(`Server ready at ${url}`)
-    console.log(`Subscriptions ready at ${subscriptionsUrl}`)
+//escuchamos por el puerto guardado en las variables de entorno
+server.listen(config.PORT, () => {
+  logger.info(`Server running on port ${config.PORT}`)
 })
