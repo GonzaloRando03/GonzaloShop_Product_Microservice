@@ -35,7 +35,7 @@ productRouter.put('/:id', async (request, response) => {
   try {
     await Product.updateOne({_id: {$eq: id}}, {$push: {valorations: valoration}})
     const document = await Product.findOne({_id: {$eq: id}})
-    return formatDocumentOne(document)
+    response.status(200).json(formatDocumentOne(document)) 
 
   } catch (error) {
     response.status(500).json({error: "Producto no encontrado"})
