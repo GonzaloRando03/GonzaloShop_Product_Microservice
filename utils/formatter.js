@@ -1,3 +1,5 @@
+const images = require('../data/images.json')
+
 //función para formatear un documento de mongo
 function formatDocumentOne(doc){
     if(!doc){
@@ -9,7 +11,12 @@ function formatDocumentOne(doc){
     //creamos un objeto con los valores de doc y le añadimos el campo virtual stars
     response.stars = doc.stars
     response.id = doc._id
-    response.image = doc.images[0]
+    //images product guarda una array con las imagenes de ese producto
+    const imagesProduct = images[parseInt(doc.images)].images
+    response.images = imagesProduct
+    response.image = imagesProduct[0]
+ 
+    
     return response
 }
 

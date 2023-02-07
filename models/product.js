@@ -22,7 +22,7 @@ const schema = new mongoose.Schema({
   },
   features: mongoose.Schema.Types.Mixed,
   images: {
-    type: [String],
+    type: String,
     require: [true, "Imagenes requeridas"]
   },
   brand: String,
