@@ -1,5 +1,5 @@
 //imports 
-const {formatDocumentOne, formatDocuments} = require("../utils/formatter")
+const {formatDocumentOne} = require("../utils/formatter")
 const Product = require('../models/product')
 const productRouter = require('express').Router()
 
