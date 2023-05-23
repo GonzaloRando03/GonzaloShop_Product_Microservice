@@ -88,6 +88,30 @@ searchRouter.get('/:amount/:order/:maxPrice/:minPrice/:search/:sale/:category', 
 
 
   try {
+    //Esta parte de la consulta solo se ejecuta para las ofertas del principio
+    if(!searchQuery && !categoryQuery && amountQuery === 6 && sale === "true"){
+        const products = await Product.find({   
+            $and:[
+                {
+                    "price":{$gte: minPriceQuery}
+                },{
+                    "price":{$lte: maxPriceQuery}
+                },{
+                    "sale":{$eq: true}
+                }
+            ]
+            
+        }).limit(amountQuery)
+
+        //aplicamos todos los filtros y ordenamos
+        response.status(200).json(
+            formatDocuments(
+                aplicarOrden(products, order)
+            )
+        )
+        return
+    }
+    
     //si estamos usando el buscador ejecutamos la siguiente consulta
     if (searchQuery){
         const products = await Product.find(
