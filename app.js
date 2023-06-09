@@ -1,16 +1,11 @@
-//importaciones de librerias
 const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
-
-//importaciones propias
 const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
 const config = require('./utils/config')
 const productRouter = require('./controllers/productController')
 const searchRouter = require('./controllers/searchController')
-
-
 
 const app = express()
 
@@ -27,7 +22,6 @@ mongoose.connect(config.MONGODB_URI)
   .catch((error) => {
     logger.error('error connecting to MongoDB:', error.message)
   })
-
 
 //usamos cors y expres json para que nuestro servidor pueda ser funcional
 app.use(cors())

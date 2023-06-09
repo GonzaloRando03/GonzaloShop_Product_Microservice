@@ -26,8 +26,6 @@ productRouter.put('/:id', async (request, response) => {
   const id = request.params.id
   const valoration = request.body
 
-  console.log(valoration)
-
   if (!id || !valoration){
     response.status(500).json({error: "Error al publicar la valoración"})
   }

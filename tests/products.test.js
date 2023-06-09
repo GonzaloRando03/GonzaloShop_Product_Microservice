@@ -1,6 +1,16 @@
 const mongoose = require('mongoose')
 const supertest = require('supertest')
 
+const PATHS_PRODUCTS = {
+  todos: '/api/products/50/Destacados/10000/0/no-search/false/Todas las categorías',
+  tresProductos: '/api/products/3/Destacados/10000/0/no-search/false/Todas las categorías',
+  buscarDiscoDuro: '/api/products/50/Destacados/10000/0/disco/false/Todas las categorías',
+  buscarProductoFalso: '/api/products/50/Destacados/10000/0/lkajsdfoiej/false/Todas las categorías',
+  productosDescuentos: '/api/products/50/Destacados/10000/0/no-search/true/Todas las categorías',
+  precioEntre50y100: '/api/products/50/Destacados/100/50/no-search/false/Todas las categorías',
+  precioErroneo: '/api/products/50/Destacados/50/100/no-search/false/Todas las categorías'
+}
+
 //creamos la api de supertest
 const app = require('../app')
 const api = supertest(app)
@@ -11,7 +21,7 @@ describe('Products test',  () => {
 
     test('Pedir todos los productos', async () => {
       const response = await api
-        .get('/api/products/50/Destacados/10000/0/no-search/false')
+        .get(PATHS_PRODUCTS.todos)
         .expect(200)
         .expect('Content-Type', /application\/json/)
 
@@ -21,7 +31,7 @@ describe('Products test',  () => {
 
     test('Pedir 3 productos', async () => {
       const response = await api
-        .get('/api/products/3/Destacados/10000/0/no-search/false')
+        .get(PATHS_PRODUCTS.tresProductos)
         .expect(200)
         .expect('Content-Type', /application\/json/)
 
@@ -32,7 +42,7 @@ describe('Products test',  () => {
 
     test('Pruebas del buscador correcto', async () => {
       const response = await api
-        .get('/api/products/50/Destacados/10000/0/disco/false')
+        .get(PATHS_PRODUCTS.buscarDiscoDuro)
         .expect(200)
         .expect('Content-Type', /application\/json/)
 
@@ -43,7 +53,7 @@ describe('Products test',  () => {
 
     test('Pruebas del buscador erroneo', async () => {
       const response = await api
-        .get('/api/products/50/Destacados/10000/0/lkajsdfoiej/false')
+        .get(PATHS_PRODUCTS.buscarProductoFalso)
         .expect('Content-Type', /application\/json/)
       expect(response.body[0].error).toBeDefined()
     })
@@ -51,7 +61,7 @@ describe('Products test',  () => {
 
     test('Pedir productos con descuento', async () => {
       const response = await api
-        .get('/api/products/50/Destacados/10000/0/no-search/true')
+        .get(PATHS_PRODUCTS.productosDescuentos)
         .expect(200)
         .expect('Content-Type', /application\/json/)
 
@@ -61,7 +71,7 @@ describe('Products test',  () => {
     
     test('Precio entre 50 y 100 €', async () => {
       const response = await api
-        .get('/api/products/50/Destacados/100/50/no-search/false')
+        .get(PATHS_PRODUCTS.precioEntre50y100)
         .expect(200)
         .expect('Content-Type', /application\/json/)
 
@@ -72,19 +82,22 @@ describe('Products test',  () => {
 
     test('Precio entre 50 y 100 € erroneo', async () => {
       const response = await api
-        .get('/api/products/50/Destacados/50/100/no-search/false')
+        .get(PATHS_PRODUCTS.precioErroneo)
         .expect('Content-Type', /application\/json/)
       expect(response.body[0].error).toBeDefined()
     })
 
 
     test('Pedir un producto correcto', async () => {
+      const products = await api
+        .get(PATHS_PRODUCTS.todos)
+
       const response = await api
-        .get('/api/product/63c722826668daae40c4fd3c')
+        .get(`/api/product/${products.body[0].id}`)
         .expect(200)
         .expect('Content-Type', /application\/json/)
 
-      expect(response.body.name).toBe("Levi's 512™ Slim Taper Vaqueros Hombre")
+      expect(response.body.name).toBe(products.body[0].name)
     })
 
 
@@ -105,8 +118,11 @@ describe('Products test',  () => {
             stars: 5
         }
 
+        const products = await api
+        .get(PATHS_PRODUCTS.todos)
+
         await api
-          .put('/api/product/63c722826668daae40c4fd3c')
+          .put(`/api/product/${products.body[0].id}`)
           .send(valoration)
           .expect(200)
           .expect('Content-Type', /application\/json/)
